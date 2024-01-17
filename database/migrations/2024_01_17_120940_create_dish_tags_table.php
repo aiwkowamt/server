@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('image_path')->nullable();
-
-            $table->timestamps();
+        Schema::create('dish_tags', function (Blueprint $table) {
+            $table->foreignId('dish_id')->constrained();
+            $table->foreignId('tag_id')->constrained();
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurants');
+        Schema::dropIfExists('dish_tags');
     }
 };

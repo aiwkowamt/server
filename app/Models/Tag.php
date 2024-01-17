@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class Tag extends Model
 {
     use HasFactory;
 
     public function dishes()
     {
-        return $this->hasMany(Dish::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
+        return $this->belongsToMany(Dish::class, 'dish_tags');
     }
 }

@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->time('delivery_duration')->nullable();
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled']);
+
+            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }

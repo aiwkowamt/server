@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restaurants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('phone');
-            $table->string('image_path')->nullable();
-
-            $table->timestamps();
+        Schema::create('role_permission', function (Blueprint $table) {
+            $table->foreignId('role_id')->constrained();
+            $table->foreignId('permission_id')->constrained();
         });
     }
 
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restaurants');
+        Schema::dropIfExists('role_permission');
     }
 };
