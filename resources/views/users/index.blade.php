@@ -20,13 +20,13 @@
         <tbody>
         @foreach($users as $user)
             <tr>
-                <td class="align-middle">{{ $user->id }}</td>
-                <td class="align-middle">{{ $user->email }}</td>
-                <td class="align-middle">{{ $user->address }}</td>
-                <td class="align-middle">{{ $user->first_name }}</td>
-                <td class="align-middle">{{ $user->second_name }}</td>
-                <td class="align-middle">{{ $user->phone }}</td>
-                <td class="align-middle">{{ $user->role->name }}</td>
+                <td class="align-middle">{{ optional($user)->id }}</td>
+                <td class="align-middle">{{ optional($user)->email }}</td>
+                <td class="align-middle">{{ optional($user)->address }}</td>
+                <td class="align-middle">{{ optional($user)->first_name }}</td>
+                <td class="align-middle">{{ optional($user)->second_name }}</td>
+                <td class="align-middle">{{ optional($user)->phone }}</td>
+                <td class="align-middle">{{ optional($user->role)->name }}</td>
                 <td class="align-middle">
                     <div class="d-flex justify-content-center">
                         <form method="GET" action="{{ route('users.edit', $user->id) }}">
