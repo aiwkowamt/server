@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\RoleName;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class AuthController extends Controller
             'second_name' => $request->get('secondName'),
             'address' => $request->get('address'),
             'phone' => $request->get('phone'),
-            'role_id' => 2,
+            'role_id' => RoleName::getId(RoleName::CUSTOMER),
         ]);
 
         Auth::login($user);
@@ -57,5 +58,17 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Успешный выход!'
         ], 200);
+    }
+
+    public function getUserRole()
+    {
+        $user = Auth::user();
+        if ($user) {
+            return response()->json([
+                'role' => $user->role->name,
+                'message' => 'Роль пользователя найдена!',
+            ]);
+        }
+        return response()->json(['message' => 'Не удается найти роль пользователя!'], 401);
     }
 }

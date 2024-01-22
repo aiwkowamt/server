@@ -1,7 +1,7 @@
 @extends('layouts.nav')
 @section('content')
     <form method="GET" action="{{ route('users.create') }}">
-        <button class="btn btn-primary">Добавить нового пользователя</button>
+        <button class="btn btn-primary ">Добавить нового пользователя</button>
     </form>
 
     <table class="table table-bordered text-center">
