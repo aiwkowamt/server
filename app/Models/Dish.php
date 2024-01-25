@@ -9,6 +9,9 @@ class Dish extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+    protected $guarded = ['id'];
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);

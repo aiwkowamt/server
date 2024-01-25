@@ -44,9 +44,10 @@ class DeclarationController extends Controller
         ]);
 
         $currentStatus = $declaration->status;
-        if ($currentStatus === 'completed') {
-            $declaration->update([
-                'role_id' => RoleName::getId(RoleName::CUSTOMER),
+        if ($currentStatus->value === 'completed') {
+            $user = $declaration->user;
+            $user->update([
+                'role_id' => RoleName::getId(RoleName::STORE),
             ]);
         }
 

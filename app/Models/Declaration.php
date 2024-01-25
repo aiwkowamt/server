@@ -21,4 +21,9 @@ class Declaration extends Model
     protected $casts = [
         'status' => DeclarationStatus::class,
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

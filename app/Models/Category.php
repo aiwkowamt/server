@@ -9,6 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $guarded = ['id'];
+
     public function dishes()
     {
         return $this->hasMany(Dish::class);

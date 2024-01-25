@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DeclarationController;
+use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +31,8 @@ Route::get('/declarations', [DeclarationController::class, 'index'])->middleware
 Route::get('/declarations/{declaration}/edit', [DeclarationController::class, 'edit'])->middleware('auth:sanctum')->name('declarations.edit');
 Route::put('/declarations/{declaration}', [DeclarationController::class, 'update'])->middleware('auth:sanctum')->name('declarations.update');
 
+Route::get('/restaurants', [RestaurantController::class, 'index'])->middleware('auth:sanctum')->name('restaurants.index');
+
+Route::get('/categories', [CategoryController::class, 'index'])->middleware('auth:sanctum')->name('categories.index');
+Route::get('/categories/create', [CategoryController::class, 'create'])->middleware('auth:sanctum')->name('categories.create');
+Route::post('/categories', [CategoryController::class, 'store'])->middleware('auth:sanctum')->name('categories.store');

@@ -66,7 +66,6 @@ class AuthController extends Controller
         if ($user) {
             return response()->json([
                 'role' => $user->role->name,
-                'message' => 'Роль пользователя найдена!',
             ]);
         }
         return response()->json(['message' => 'Не удается найти роль пользователя!'], 401);

@@ -4,7 +4,6 @@
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-2 position-fixed vh-100 bg-dark bg-gradient p-2">
-            <!-- Drop menu with Dashboards -->
             <div class="dropdown">
                 <a class="btn btn-light w-100 dropdown-toggle" href="#" role="button" id="dashboardDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Dashboards
@@ -12,10 +11,11 @@
                 <div class="dropdown-menu w-100" aria-labelledby="dashboardDropdown">
                     <a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
                     <a class="dropdown-item" href="{{ route('roles.index') }}">Roles</a>
+                    <a class="dropdown-item" href="{{ route('restaurants.index') }}">Restaurants</a>
+                    <a class="dropdown-item" href="{{ route('categories.index') }}">Categories</a>
                 </div>
             </div>
 
-            <!-- Solo nav elements -->
             <a class="btn btn-light w-100 mt-2" href="{{ route('declarations.index') }}">Declarations</a>
         </div>
 
