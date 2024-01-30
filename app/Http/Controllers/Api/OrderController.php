@@ -10,22 +10,19 @@ class OrderController extends Controller
 {
     public function createOrder(Request $request)
     {
-        $order = new Order();
-        $order->restaurant_id = $request->order['restaurant_id'];
-        $order->user_id = $request->user()->id;
-        $order->status = 'pending';
-        $order->save();
+        $order = Order::create([
+            'restaurant_id' => $request->restaurant_id,
+            'user_id' => $request->user()->id,
+            'status' => 'pending',
+        ]);
 
-        foreach ($request->order['items'] as $item) {
-            $quantity = $item['quantity'];
-            $dish_id = $item['dish_id'];
-
-            for ($i = 0; $i < $quantity; $i++) {
-                $order->dishes()->attach($dish_id);
+        foreach ($request->items as $item) {
+            for ($i = 0; $i < $item['quantity']; $i++) {
+                $order->dishes()->attach($item['dish_id']);
             }
         }
 
-        return response()->json(['message' => 'Заказ успешно создан'], 201);
+        return response()->json(['message' => 'Заказ успешно создан'], 200);
     }
-
 }
+
