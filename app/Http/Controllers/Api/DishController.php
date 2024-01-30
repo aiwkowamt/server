@@ -9,17 +9,19 @@ use Illuminate\Http\Request;
 class DishController extends Controller
 {
 
-    public function index()
+    public function getRestaurantDishes($restaurant_id)
     {
-        $dishes = Dish::all();
-        if($dishes){
+        $dishes = Dish::where('restaurant_id', $restaurant_id)->get();
+
+        if($dishes->isEmpty()){
             return response()->json([
-                'dishes' => $dishes,
-            ], 200);
+                'message' => 'Позиций не найдено для данного ресторана!',
+            ], 404);
         }
+
         return response()->json([
-            'message' => 'Позиций не найдено!',
-        ], 400);
+            'dishes' => $dishes,
+        ], 200);
     }
 
     public function store(Request $request)

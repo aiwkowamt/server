@@ -8,6 +8,30 @@ use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
 {
+    public function search(Request $request)
+    {
+        $name = $request->input('name');
+
+        $restaurants = Restaurant::query()
+            ->byName($name)
+            ->paginate(10);
+
+        return response()->json([
+            'restaurants' => $restaurants,
+        ]);
+    }
+
+    public function getUserRestaurants(Request $request)
+    {
+        $user_id = $request->user()->id;
+
+        $restaurants = Restaurant::where('user_id', $user_id)->get();
+
+        return response()->json([
+            'restaurants' => $restaurants,
+        ]);
+    }
+
     public function index(Request $request)
     {
         $user_id = $request->user()->id;

@@ -24,9 +24,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/restaurants', [RestaurantController::class, 'store']);
     Route::get('/restaurants/edit/{id}', [RestaurantController::class, 'edit']);
     Route::put('/restaurants/{id}', [RestaurantController::class, 'update']);
+    Route::get('/user-restaurants', [RestaurantController::class, 'getUserRestaurants']);
+    Route::get('/restaurants-search', [RestaurantController::class, 'search']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
 
-    Route::get('/dishes', [DishController::class, 'index']);
+    Route::get('/restaurant-dishes/{restaurant_id}', [DishController::class, 'getRestaurantDishes']);
     Route::post('/dish', [DishController::class, 'store']);
 });
