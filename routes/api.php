@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\DishController;
 use App\Http\Controllers\Api\DeclarationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\OrderController;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -31,4 +33,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/restaurant-dishes/{restaurant_id}', [DishController::class, 'getRestaurantDishes']);
     Route::post('/dish', [DishController::class, 'store']);
+
+    Route::get('user-address', [UserController::class, 'getUserAddress']);
+
+    Route::post('create-order', [OrderController::class, 'createOrder']);
 });
