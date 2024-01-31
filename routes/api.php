@@ -34,7 +34,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/restaurant-dishes/{restaurant_id}', [DishController::class, 'getRestaurantDishes']);
     Route::post('/dish', [DishController::class, 'store']);
 
-    Route::get('user-address', [UserController::class, 'getUserAddress']);
+    Route::get('/user-address', [UserController::class, 'getUserAddress']);
 
-    Route::post('create-order', [OrderController::class, 'createOrder']);
+    Route::get('/user-orders', [OrderController::class, 'getUserOrders']);
+    Route::post('/create-order', [OrderController::class, 'createOrder']);
+    Route::get('/restaurant-orders/{restaurant_id}', [OrderController::class, 'getRestaurantOrders']);
+    Route::put('/orders/{orderId}', [OrderController::class, 'updateOrderStatus']);
 });

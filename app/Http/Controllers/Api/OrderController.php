@@ -22,7 +22,37 @@ class OrderController extends Controller
             }
         }
 
-        return response()->json(['message' => 'Заказ успешно создан'], 200);
+        return response()->json([
+            'message' => 'Заказ успешно создан',
+            ], 200);
+    }
+
+    public function getUserOrders(Request $request)
+    {
+        $user = $request->user();
+        $orders = Order::where('user_id', $user->id)->with('dishes.restaurant')->get();
+        return response()->json([
+            'orders' => $orders,
+        ], 200);
+    }
+
+    public function getRestaurantOrders($restaurant_id)
+    {
+        $orders = Order::where('restaurant_id', $restaurant_id)->with('dishes.restaurant')->get();
+
+        return response()->json([
+            'orders' => $orders,
+        ]);
+    }
+
+    public function updateOrderStatus(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        $order->status = $request->input('status');
+        $order->save();
+
+        return response()->json(['message' => 'Статус заказа успешно обновлен'], 200);
     }
 }
 
