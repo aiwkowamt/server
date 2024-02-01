@@ -22,11 +22,6 @@ class Dish extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_dish');

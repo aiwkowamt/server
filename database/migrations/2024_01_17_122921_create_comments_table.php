@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('grade');
 
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('dish_id')->constrained('dishes')->cascadeOnDelete();
+            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
 
             $table->timestamps();
         });

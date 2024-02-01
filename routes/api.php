@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\CommentController;
 
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -40,4 +41,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/create-order', [OrderController::class, 'createOrder']);
     Route::get('/restaurant-orders/{restaurant_id}', [OrderController::class, 'getRestaurantOrders']);
     Route::put('/orders/{orderId}', [OrderController::class, 'updateOrderStatus']);
+
+    Route::post('/comments',[CommentController::class, 'store']);
 });
