@@ -43,15 +43,21 @@ class RestaurantController extends Controller
 
     public function store(Request $request)
     {
-        $restaurant = Restaurant::create([
-            'name' => $request->input('name'),
-            'address' => $request->input('address'),
-            'phone' => $request->input('phone'),
-            'image_path' => $request->input('image_path'),
-            'user_id' => $request->user()->id,
-        ]);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/restaurants', 'public');
 
-        return response()->json(['message' => 'Ресторан успешно добавлен']);
+            $restaurant = Restaurant::create([
+                'name' => $request->input('name'),
+                'address' => $request->input('address'),
+                'phone' => $request->input('phone'),
+                'user_id' => $request->user()->id,
+                'image_path' => $imagePath,
+            ]);
+
+            return response()->json(['message' => 'Ресторан успешно добавлен']);
+        }
+
+        return response()->json(['message' => 'Ошибка'], 400);
     }
 
     public function edit(string $id)
