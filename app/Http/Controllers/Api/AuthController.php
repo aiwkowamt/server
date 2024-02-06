@@ -33,9 +33,6 @@ class AuthController extends Controller
         $user = User::create([
             'email' => $request->get('email'),
             'password' => $request->get('password'),
-            'first_name' => $request->get('firstName'),
-            'second_name' => $request->get('secondName'),
-            'address' => $request->get('address'),
             'phone' => $request->get('phone'),
             'role_id' => RoleName::getId(RoleName::CUSTOMER),
         ]);
@@ -58,16 +55,5 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Успешный выход!'
         ], 200);
-    }
-
-    public function getUserRole()
-    {
-        $user = Auth::user();
-        if ($user) {
-            return response()->json([
-                'role' => $user->role->name,
-            ]);
-        }
-        return response()->json(['message' => 'Не удается найти роль пользователя!'], 401);
     }
 }

@@ -16,8 +16,8 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function restaurant()
+    public function order()
     {
-        return $this->belongsTo(Restaurant::class);
+        return $this->hasOne(Order::class);
     }
 }

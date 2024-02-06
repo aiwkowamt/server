@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('image_path');
 
-            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
+            $table->foreignId('restaurant_id')->constrained('restaurants');
         });
     }
 

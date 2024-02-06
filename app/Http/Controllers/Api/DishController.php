@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dish;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class DishController extends Controller
@@ -11,15 +12,17 @@ class DishController extends Controller
 
     public function getRestaurantDishes($restaurant_id)
     {
+        $restaurant = Restaurant::findOrFail($restaurant_id);
         $dishes = Dish::where('restaurant_id', $restaurant_id)->get();
 
-        if($dishes->isEmpty()){
+        if ($dishes->isEmpty()) {
             return response()->json([
                 'message' => 'Позиций не найдено для данного ресторана!',
             ], 404);
         }
 
         return response()->json([
+            'restaurant' => $restaurant,
             'dishes' => $dishes,
         ], 200);
     }

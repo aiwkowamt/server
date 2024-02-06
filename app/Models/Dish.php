@@ -26,9 +26,4 @@ class Dish extends Model
     {
         return $this->belongsToMany(Order::class, 'order_dish');
     }
-
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class, 'dish_tags');
-    }
 }

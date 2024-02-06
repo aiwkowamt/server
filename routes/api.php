@@ -15,8 +15,6 @@ Route::prefix('/auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
-
-    Route::get('/user-role', [AuthController::class, 'getUserRole'])->middleware('auth:sanctum');
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
@@ -35,7 +33,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/restaurant-dishes/{restaurant_id}', [DishController::class, 'getRestaurantDishes']);
     Route::post('/dish', [DishController::class, 'store']);
 
-    Route::get('/user-address', [UserController::class, 'getUserAddress']);
+    Route::get('/user', [UserController::class, 'index']);
+    Route::put('/user/{id}', [UserController::class, 'update']);
 
     Route::get('/user-orders', [OrderController::class, 'getUserOrders']);
     Route::post('/create-order', [OrderController::class, 'createOrder']);

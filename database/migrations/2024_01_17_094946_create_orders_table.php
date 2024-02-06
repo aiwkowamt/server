@@ -16,8 +16,9 @@ return new class extends Migration
             $table->time('delivery_duration')->nullable();
             $table->enum('status', ['pending', 'processing', 'completed', 'cancelled']);
 
-            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('comment_id')->nullable()->constrained('comments')->cascadeOnDelete();
+            $table->foreignId('restaurant_id')->constrained('restaurants');
+            $table->foreignId('user_id')->constrained('users');
 
             $table->timestamps();
         });

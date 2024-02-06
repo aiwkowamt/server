@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('description');
             $table->enum('status', ['pending', 'completed', 'cancelled']);
 
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users');
 
             $table->timestamps();
         });

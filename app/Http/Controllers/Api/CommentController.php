@@ -11,9 +11,9 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $comment = Comment::create([
-            'text' => $request->comment['text'],
-            'grade' => $request->comment['grade'],
-            'restaurant_id' => $request->comment['restaurant_id'],
+            'text' => $request->input('text'),
+            'grade' => $request->input('grade'),
+            'order_id' => $request->input('order_id'),
             'user_id' =>$request->user()->id,
         ]);
 
