@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/restaurants/{id}', [RestaurantController::class, 'update']);
     Route::get('/user-restaurants', [RestaurantController::class, 'getUserRestaurants']);
     Route::get('/restaurants-search', [RestaurantController::class, 'search']);
+    Route::get('/restaurants/{restaurantId}/average-rating', [RestaurantController::class, 'getAverageRating']);
 
     Route::get('/categories', [CategoryController::class, 'index']);
 

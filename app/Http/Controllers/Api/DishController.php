@@ -29,13 +29,19 @@ class DishController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/restaurants', 'public');
+        } else {
+            $imagePath = null;
+        }
+
         $dish = Dish::create([
             'name' => $request->input('name'),
             'category_id' => $request->input('category_id'),
             'restaurant_id' => $request->input('restaurant_id'),
             'price' => $request->input('price'),
             'description' => $request->input('description'),
-            'image_path' => $request->input('image_path'),
+            'image_path' => $imagePath,
         ]);
 
         if ($dish) {

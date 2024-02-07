@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Restaurant extends Model
 {
@@ -37,5 +38,13 @@ class Restaurant extends Model
         if ($name !== null) {
             $query->where('name', 'like', '%' . $name . '%');
         }
+    }
+
+    public function scopeWithAverageRating(Builder $query): void
+    {
+        $query->leftJoin('orders', 'restaurants.id', '=', 'orders.restaurant_id')
+            ->leftJoin('comments', 'orders.comment_id', '=', 'comments.id')
+            ->select('restaurants.*', DB::raw('AVG(comments.grade) AS average_rating'))
+            ->groupBy('restaurants.id');
     }
 }
