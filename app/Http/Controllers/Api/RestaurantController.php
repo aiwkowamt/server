@@ -18,7 +18,7 @@ class RestaurantController extends Controller
         $restaurants = Restaurant::query()
             ->byName($name)
             ->withAverageRating()
-            ->paginate(3);
+            ->paginate(4);
 
         return response()->json([
             'restaurants' => $restaurants,
