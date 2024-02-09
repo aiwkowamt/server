@@ -13,7 +13,7 @@ class DishController extends Controller
     public function getRestaurantDishes($restaurant_id)
     {
         $restaurant = Restaurant::findOrFail($restaurant_id);
-        $dishes = Dish::where('restaurant_id', $restaurant_id)->get();
+        $dishes = Dish::where('restaurant_id', $restaurant_id)->with('category')->get();
 
         if ($dishes->isEmpty()) {
             return response()->json([
