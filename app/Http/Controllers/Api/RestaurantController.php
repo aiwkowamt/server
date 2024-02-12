@@ -13,12 +13,17 @@ class RestaurantController extends Controller
 {
     public function search(Request $request)
     {
+//        dd($request->all());
         $name = $request->input('name');
+        $sortBy = $request->input('sortBy');
+        $categories = $request->input('categories');
 
         $restaurants = Restaurant::query()
             ->byName($name)
+            ->sortBy($sortBy)
+            ->byCategories($categories)
             ->withAverageRating()
-            ->paginate(4);
+            ->paginate(6);
 
         return response()->json([
             'restaurants' => $restaurants,

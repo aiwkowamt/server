@@ -19,11 +19,10 @@ class AuthController extends Controller
             return response()->json([
                 'token' => $token,
                 'user' => $user,
-                'message' => 'Успешный вход!',
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Неверная почта или пароль!',
+                'message' => 'Неверная почта или пароль',
             ], 401);
         }
     }
@@ -44,7 +43,6 @@ class AuthController extends Controller
         return response()->json([
             'token' => $token,
             'user' => $user,
-            'message' => 'Успешная регистрация!'
         ], 200);
     }
 
@@ -53,7 +51,7 @@ class AuthController extends Controller
         Auth::logout();
 
         return response()->json([
-            'message' => 'Успешный выход!'
+            'message' => 'Успешный выход'
         ], 200);
     }
 }

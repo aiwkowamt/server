@@ -11,9 +11,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $user = $request->user()->load('role');
-        return response()->json([
-            'user' => $user,
-        ]);
+        if($user){
+            return response()->json([
+                'user' => $user,
+            ]);
+        } else {
+            return  response()->json([
+                'message' => 'Не авторизован',
+            ], 401);
+        }
     }
 
     public function update(Request $request, $id)

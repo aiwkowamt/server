@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dish;
+use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
@@ -54,4 +55,34 @@ class DishController extends Controller
             ], 500);
         }
     }
+
+    public function dishRecommendations(Request $request)
+    {
+        $userId = $request->user()->id;
+
+        $categoryIds = Order::where('user_id', $userId)
+            ->with('dishes.category')
+            ->get()
+            ->flatMap(function ($order) {
+                return $order->dishes->pluck('category_id');
+            })
+            ->groupBy(function ($categoryId) {
+                return $categoryId;
+            })
+            ->map(function ($categoryIds) {
+                return count($categoryIds);
+            })
+            ->sortDesc()
+            ->take(3)
+            ->keys();
+
+        $dishes = Dish::whereIn('category_id', $categoryIds)
+            ->with('category:id,name')
+            ->get();
+
+        return response()->json([
+            'dishes' => $dishes,
+        ], 200);
+    }
+
 }

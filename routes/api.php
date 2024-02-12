@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/restaurant-dishes/{restaurant_id}', [DishController::class, 'getRestaurantDishes']);
     Route::post('/dish', [DishController::class, 'store']);
+    Route::get('/dish-recommendations', [DishController::class, 'dishRecommendations']);
 
     Route::get('/user', [UserController::class, 'index']);
     Route::put('/user/{id}', [UserController::class, 'update']);

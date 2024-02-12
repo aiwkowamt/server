@@ -44,7 +44,34 @@ class Restaurant extends Model
     {
         $query->leftJoin('orders', 'restaurants.id', '=', 'orders.restaurant_id')
             ->leftJoin('comments', 'orders.comment_id', '=', 'comments.id')
-            ->select('restaurants.*', DB::raw('AVG(comments.grade) AS average_rating'))
+            ->select('restaurants.*',
+                DB::raw('AVG(comments.grade) AS average_rating'),
+                DB::raw('COUNT(comments.id) AS comments_count'))
             ->groupBy('restaurants.id');
+    }
+
+    public function scopeByCategories(Builder $query, ?array $categories): void
+    {
+        if ($categories !== null && count($categories) > 0) {
+            $query->whereHas('dishes', function ($q) use ($categories) {
+                $q->whereIn('category_id', $categories);
+            });
+        }
+    }
+
+    public function scopeSortBy(Builder $query, ?string $sortBy): void
+    {
+        if ($sortBy !== null) {
+            switch ($sortBy) {
+                case 'rating':
+                    $query->orderByDesc('average_rating');
+                    break;
+                case 'orders_count':
+                    $query->withCount('orders')->orderByDesc('comments_count');
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
