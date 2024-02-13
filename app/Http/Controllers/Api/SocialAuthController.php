@@ -2,66 +2,42 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\RoleName;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->stateless()->redirect();
+        $url = Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
+        return response()->json([
+            'url' => $url,
+        ]);
     }
 
     public function handleProviderCallback($provider)
     {
-        $githubUser = Socialite::driver($provider)->stateless()->user();
+        $socialiteUser = Socialite::driver($provider)->stateless()->user();
 
-        if (!$githubUser) {
-            $user = User::firstOrCreate(
-                ['provider_id' => $githubUser->getId()],
-                [
-                    'first_name' => $githubUser->getName(),
-                    'email' => $githubUser->getEmail(),
-                    'provider' => 'github',
-                    'password' => Hash::make(''),
-                    'role_id' => RoleName::getId(RoleName::CUSTOMER),
-                ]
-            );
+        $user = User::where('email', $socialiteUser->getEmail())->first();
+        if (!$user) {
+            $user = User::create([
+                'provider_id' => $socialiteUser->getId(),
+                'first_name' => $socialiteUser->getName(),
+                'email' => $socialiteUser->getEmail(),
+                'provider' => 'github',
+                'password' => Hash::make(''),
+                'role_id' => RoleName::getId(RoleName::CUSTOMER),
+            ]);
         }
-
-        dd($user->token);
+        $token = $user->createToken('token')->plainTextToken;
+        return response()->json([
+            'token' => $token,
+            'user' => $user,
+        ], 200);
     }
-//    public function github()
-//    {
-//        $url = Socialite::driver('github')->stateless()->redirect()->getTargetUrl();
-//
-//        return response()->json([
-//            'url' => $url
-//        ]);
-//    }
-//
-//    public function githubRedirect()
-//    {
-//        $githubUser = Socialite::driver('github')->stateless()->user();
-//
-//        $user = User::firstOrCreate(
-//            ['provider_id' => $githubUser->getId()],
-//            [
-//                'first_name' => $githubUser->getName(),
-//                'email' => $githubUser->getEmail(),
-//                'provider' => 'github',
-//                'password' => Hash::make(''),
-//                'role_id' => RoleName::getId(RoleName::CUSTOMER),
-//            ]
-//        );
-//
-//        Auth::login($user);
-//        $token = $user->createToken('GitHub Token')->plainTextToken;
-//        return response()->json([
-//            'token' => $token,
-//            'user' => $user,
-//        ], 200);
-//    }
 }
