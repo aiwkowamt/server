@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\PDFGeneration;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -35,7 +36,13 @@ class GeneratePDFRestaurantComments implements ShouldQueue
         ];
 
         $pdf = Pdf::loadView('pdf.restaurant-comments', $data);
-        $pdfContent = $pdf->output();
-        Storage::put("app/public/pdfs/restaurant-comments.pdf", $pdfContent);
+        $fileName = 'restaurant-comments.pdf';
+        $filePath = 'public/pdfs/';
+        $file = Storage::disk('local')->put($filePath . $fileName, $pdf->output());
+        $fileUrl = Storage::path($filePath);
+        chmod($fileUrl, 0777);
+        $fileUrl = $filePath . $fileName;
+
+        event(new PDFGeneration($fileUrl));
     }
 }

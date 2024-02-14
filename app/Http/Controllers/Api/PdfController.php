@@ -12,11 +12,9 @@ use Illuminate\Support\Facades\Storage;
 
 class PdfController extends Controller
 {
-    public function generatePDFComments(Request $request)
+    public function generatePDFComments($id)
     {
-        $restaurant_id = $request->input('restaurant_id');
-
-        $orders = Order::where('restaurant_id', $restaurant_id)->get();
+        $orders = Order::where('restaurant_id', $id)->get();
         $comments = [];
         foreach ($orders as $order) {
             $comment = Comment::with('user')->find($order->comment_id);
@@ -29,25 +27,10 @@ class PdfController extends Controller
             }
         }
 
-        $data = [
-            'title' => 'Комментарии к заказам',
-            'date' => date('m/d/Y'),
-            'comments' => $comments,
-        ];
-
-        $pdf = Pdf::loadView('pdf.restaurant-comments', $data);
-        $fileName = 'restaurant-comments.pdf';
-        $filePath = 'public/pdfs/';
-        $file = Storage::disk('local')->put($filePath . $fileName, $pdf->output());
-        $fileUrl = Storage::path($filePath);
-        chmod($fileUrl, 0777);
-
-        $fileUrl = $filePath . $fileName;
+        GeneratePDFRestaurantComments::dispatch($comments);
 
         return response()->json([
-            'message' => 'PDF generation started.',
-            'file_url' => $fileUrl,
-            'file_name' => $fileName,
+            'message' => 'PDF start generation',
         ]);
     }
 }

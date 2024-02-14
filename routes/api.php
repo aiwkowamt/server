@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
 
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DishController;
@@ -12,6 +15,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PdfController;
 use App\Http\Controllers\Api\SocialAuthController;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/authorize/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('api.social.redirect');
 Route::get('/authorize/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('api.social.callback');
@@ -50,5 +54,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('/comments',[CommentController::class, 'store']);
 
-    Route::get('/generate-pdf-comments', [PdfController::class, 'generatePDFComments']);
+    Route::get('/generate-pdf-comments/{id}', [PdfController::class, 'generatePDFComments']);
+
+    Route::get('/download-pdf', function (Request $request) {
+        $fileUrl = $request->input('file_url');
+
+    });
 });
