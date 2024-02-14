@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\RoleName;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendSuccessfulEmail;
+use App\Mail\SuccessfulRegistration;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -37,6 +38,8 @@ class AuthController extends Controller
             'phone' => $request->get('phone'),
             'role_id' => RoleName::getId(RoleName::CUSTOMER),
         ]);
+
+        SendSuccessfulEmail::dispatch($user);
 
         Auth::login($user);
 

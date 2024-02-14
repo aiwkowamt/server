@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\CategoryController;
@@ -11,6 +10,8 @@ use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\PdfController;
+use App\Http\Controllers\Api\SocialAuthController;
 
 Route::get('/authorize/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('api.social.redirect');
 Route::get('/authorize/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('api.social.callback');
@@ -48,4 +49,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('/orders/{orderId}', [OrderController::class, 'updateOrderStatus']);
 
     Route::post('/comments',[CommentController::class, 'store']);
+
+    Route::get('/generate-pdf-comments', [PdfController::class, 'generatePDFComments']);
 });
