@@ -8,12 +8,12 @@ use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantController extends Controller
 {
     public function search(Request $request)
     {
-//        dd($request->all());
         $name = $request->input('name');
         $sortBy = $request->input('sortBy');
         $categories = $request->input('categories');
@@ -71,10 +71,14 @@ class RestaurantController extends Controller
 
     public function edit(string $id)
     {
+
         $restaurant = Restaurant::find($id);
         if (!$restaurant) {
             return response()->json(['message' => 'Ресторан не найден.'], 400);
         }
+
+        $this->authorize('view', $restaurant);
+
         return  response()->json(['restaurant' => $restaurant]);
     }
 
@@ -82,15 +86,21 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::find($id);
 
+        $this->authorize('view', $restaurant);
+
         if ($request->hasFile('image')) {
+            if ($restaurant->image_path) {
+                Storage::disk('public')->delete($restaurant->image_path);
+                $restaurant->image_path = null;
+            }
             $imagePath = $request->file('image')->store('images/restaurants', 'public');
             $restaurant->image_path = $imagePath;
-            return response()->json(['message' => 'Фотка успешно обновлена.']);
         }
+        $restaurant->update($request->except('image'));
 
-        $restaurant->update($request->all());
         return response()->json(['message' => 'Ресторан успешно обновлен.']);
     }
+
 
     public function getAverageRating($restaurant_id) {
         $averageRating = DB::table('orders')

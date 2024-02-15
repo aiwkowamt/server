@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/restaurants', [RestaurantController::class, 'index']);
     Route::post('/restaurants', [RestaurantController::class, 'store']);
     Route::get('/restaurants/edit/{id}', [RestaurantController::class, 'edit']);
-    Route::put('/restaurants/{id}', [RestaurantController::class, 'update']);
+    Route::post('/restaurants/{id}', [RestaurantController::class, 'update']);
     Route::get('/user-restaurants', [RestaurantController::class, 'getUserRestaurants']);
     Route::get('/restaurants-search', [RestaurantController::class, 'search']);
     Route::get('/restaurants/{restaurantId}/average-rating', [RestaurantController::class, 'getAverageRating']);

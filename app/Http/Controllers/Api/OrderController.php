@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\UpdateDeliveryDuration;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -54,6 +55,10 @@ class OrderController extends Controller
 
         $order->status = $request->input('status');
         $order->save();
+
+        if($order->status === 'processing'){
+            UpdateDeliveryDuration::dispatch($order);
+        }
 
         return response()->json(['message' => 'Статус заказа успешно обновлен'], 200);
     }

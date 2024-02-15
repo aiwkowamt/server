@@ -29,6 +29,7 @@
                 <td class="align-middle">{{ optional($user->role)->name }}</td>
                 <td class="align-middle">
                     <div class="d-flex justify-content-center">
+                        @if($user->role->name !== 'admin')
                         <form method="GET" action="{{ route('users.edit', $user->id) }}">
                             @csrf
                             <button type="submit" class="btn btn-warning btn-sm">Изменить</button>
@@ -38,6 +39,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
                         </form>
+                        @endif
                     </div>
                 </td>
             </tr>

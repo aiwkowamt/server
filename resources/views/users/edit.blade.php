@@ -12,26 +12,14 @@
                     id="email"
                     name="email"
                     value="{{ old('email', $user->email) }}"
-                    class="form-control @error('email') is-invalid @enderror""
+                    class="form-control @error('email') is-invalid @enderror"
                 >
                 @error('email')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
-            <div class="form-group mb-3">
-                <label for="address">Address</label>
-                <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value="{{ old('address', $user->address) }}"
-                    class="form-control @error('address') is-invalid @enderror"
-                >
-                @error('address')
-                <small class="text-danger">{{ $message }}</small>
-                @enderror
-            </div>
+
 
             <div class="form-group mb-3">
                 <label for="first_name">First Name</label>
