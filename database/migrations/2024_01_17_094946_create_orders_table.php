@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->time('delivery_duration')->nullable();
+            $table->integer('delivery_duration')->nullable();
             $table->enum('status', ['pending', 'processing', 'completed', 'cancelled']);
 
             $table->foreignId('comment_id')->nullable()->constrained('comments')->cascadeOnDelete();

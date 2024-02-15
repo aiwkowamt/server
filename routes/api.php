@@ -55,9 +55,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/comments',[CommentController::class, 'store']);
 
     Route::get('/generate-pdf-comments/{id}', [PdfController::class, 'generatePDFComments']);
-
-    Route::get('/download-pdf', function (Request $request) {
-        $fileUrl = $request->input('file_url');
-
-    });
+    Route::post('/download-pdf', [PdfController::class, 'downloadPDF']);
 });

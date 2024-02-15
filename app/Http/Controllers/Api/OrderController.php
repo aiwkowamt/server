@@ -16,6 +16,7 @@ class OrderController extends Controller
             'restaurant_id' => $data['restaurant_id'],
             'user_id' => $request->user()->id,
             'status' => 'pending',
+            'delivery_duration' =>  $data['delivery_duration'],
         ]);
 
         foreach ($data['items'] as $item) {

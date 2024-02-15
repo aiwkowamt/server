@@ -9,6 +9,7 @@ use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PdfController extends Controller
 {
@@ -32,5 +33,18 @@ class PdfController extends Controller
         return response()->json([
             'message' => 'PDF start generation',
         ]);
+    }
+
+    public function downloadPDF(Request $request)
+    {
+        $fileUrl = $request->input('file_url');
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        $path = storage_path('app/' . $fileUrl);
+
+        return response()->download($path, 'filename.pdf', $headers, 'inline');
     }
 }

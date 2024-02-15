@@ -18,8 +18,8 @@ class DishController extends Controller
 
         if ($dishes->isEmpty()) {
             return response()->json([
-                'message' => 'Позиций не найдено для данного ресторана!',
-            ], 404);
+                'message' => 'Позиций для данного ресторана не найдено.',
+            ], 200);
         }
 
         return response()->json([

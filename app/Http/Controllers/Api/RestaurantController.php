@@ -82,13 +82,15 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::find($id);
 
-        if (!$restaurant) {
-            return response()->json(['message' => 'Ресторан не найден.'], 400);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/restaurants', 'public');
+            $restaurant->image_path = $imagePath;
+            return response()->json(['message' => 'Фотка успешно обновлена.']);
         }
+
         $restaurant->update($request->all());
         return response()->json(['message' => 'Ресторан успешно обновлен.']);
     }
-
 
     public function getAverageRating($restaurant_id) {
         $averageRating = DB::table('orders')
