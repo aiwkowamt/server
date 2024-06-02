@@ -80,9 +80,11 @@ class DishController extends Controller
             ->with('category:id,name')
             ->get();
 
+
+        $randomDishes = $dishes->shuffle()->slice(0, 6);
+
         return response()->json([
-            'dishes' => $dishes,
+            'dishes' => $randomDishes,
         ], 200);
     }
-
 }

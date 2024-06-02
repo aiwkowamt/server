@@ -32,6 +32,8 @@ Route::get('/restaurants', [RestaurantController::class, 'index'])->middleware('
 Route::get('/restaurants/{restaurant}/edit', [RestaurantController::class, 'edit'])->middleware('auth:sanctum')->name('restaurants.edit');
 Route::delete('/restaurants/{restaurant}', [RestaurantController::class, 'destroy'])->middleware('auth:sanctum')->name('restaurants.destroy');
 Route::put('/restaurants/{restaurant}', [RestaurantController::class, 'update'])->middleware('auth:sanctum')->name('restaurants.update');
+Route::delete('/restaurants/{restaurant}', [RestaurantController::class, 'destroy'])->middleware('auth:sanctum')->name('restaurants.destroy');
+
 
 Route::get('/categories', [CategoryController::class, 'index'])->middleware('auth:sanctum')->name('categories.index');
 Route::get('/categories/create', [CategoryController::class, 'create'])->middleware('auth:sanctum')->name('categories.create');

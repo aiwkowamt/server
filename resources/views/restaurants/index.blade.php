@@ -36,7 +36,8 @@
                         <form method="POST" action="{{ route('restaurants.destroy', $restaurant->id) }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены?')">Удалить
+                            </button>
                         </form>
                     </div>
                 </td>
@@ -44,4 +45,5 @@
         @endforeach
         </tbody>
     </table>
+    {{ $restaurants->links() }}
 @endsection

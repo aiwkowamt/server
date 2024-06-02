@@ -17,6 +17,11 @@
             </div>
 
             <a class="btn btn-light w-100 mt-2" href="{{ route('declarations.index') }}">Declarations</a>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-danger w-100 mt-2">Logout</button>
+            </form>
         </div>
 
         <!-- Main Content -->

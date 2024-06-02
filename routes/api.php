@@ -15,7 +15,6 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\PdfController;
 use App\Http\Controllers\Api\SocialAuthController;
-use Illuminate\Support\Facades\Storage;
 
 Route::get('/authorize/{provider}/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('api.social.redirect');
 Route::get('/authorize/{provider}/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('api.social.callback');

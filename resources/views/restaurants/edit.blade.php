@@ -34,16 +34,14 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="image_path">Новое изображение</label>
-                <input type="file" id="image_path" name="image_path" class="form-control-file @error('image_path') is-invalid @enderror">
-                @error('image_path')
+                <label for="image">Новое изображение</label>
+                <input type="file" id="image" name="image" class="form-control-file @error('image') is-invalid @enderror">
+                @error('image')
                 <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
-            <img src="http://localhost:8080/storage/{{ $restaurant->image_path }}" style="width: 95px; height: 80px;" alt="Restaurant Image">
-
-            <button type="submit" class="btn btn-primary">Готово</button>
+            <button type="submit" class="btn btn-primary" onclick="return confirm('Вы уверены?')">Готово</button>
         </form>
     </div>
 @endsection
